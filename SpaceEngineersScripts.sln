@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H2O2Manager", "H2O2Manager\H2O2Manager.csproj", "{942A29AE-4F7A-47CC-80C8-ABBBEB752884}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhipDoor", "WhipDoor\WhipDoor.csproj", "{AE6344EC-076C-4726-85E5-4A7E7DB4334A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{942A29AE-4F7A-47CC-80C8-ABBBEB752884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{942A29AE-4F7A-47CC-80C8-ABBBEB752884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{942A29AE-4F7A-47CC-80C8-ABBBEB752884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{942A29AE-4F7A-47CC-80C8-ABBBEB752884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE6344EC-076C-4726-85E5-4A7E7DB4334A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE6344EC-076C-4726-85E5-4A7E7DB4334A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE6344EC-076C-4726-85E5-4A7E7DB4334A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE6344EC-076C-4726-85E5-4A7E7DB4334A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
