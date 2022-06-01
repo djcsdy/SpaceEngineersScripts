@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H2O2Manager", "H2O2Manager\H2O2Manager.csproj", "{942A29AE-4F7A-47CC-80C8-ABBBEB752884}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2H2Manager", "O2H2Manager\O2H2Manager.csproj", "{942A29AE-4F7A-47CC-80C8-ABBBEB752884}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhipDoor", "WhipDoor\WhipDoor.csproj", "{AE6344EC-076C-4726-85E5-4A7E7DB4334A}"
 EndProject
