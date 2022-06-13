@@ -29,6 +29,7 @@ namespace DockingManager
         private const string IniToggleMotors = "Toggle Motors";
         private const string IniToggleThrusters = "Toggle Thrusters";
         private const string IniToggleGyroscopes = "Toggle Gyroscopes";
+        private const string IniMaintainPower = "MaintainPower";
 
         private readonly MyIni _ini = new MyIni();
         private readonly List<IMyCockpit> _cockpits = new List<IMyCockpit>();
@@ -46,6 +47,7 @@ namespace DockingManager
         private bool _toggleMotors = true;
         private bool _toggleThrusters = true;
         private bool _toggleGyroscopes = true;
+        private bool _maintainPower = true;
 
         public Program()
         {
@@ -63,6 +65,7 @@ namespace DockingManager
                 _toggleMotors = _ini.Get(IniSection, IniToggleMotors).ToBoolean(true);
                 _toggleThrusters = _ini.Get(IniSection, IniToggleThrusters).ToBoolean(true);
                 _toggleGyroscopes = _ini.Get(IniSection, IniToggleGyroscopes).ToBoolean(true);
+                _maintainPower = _ini.Get(IniSection, IniMaintainPower).ToBoolean(true);
             }
             else if (!string.IsNullOrWhiteSpace(Me.CustomData))
             {
@@ -75,6 +78,7 @@ namespace DockingManager
             _ini.Set(IniSection, IniToggleMotors, _toggleMotors);
             _ini.Set(IniSection, IniToggleThrusters, _toggleThrusters);
             _ini.Set(IniSection, IniToggleGyroscopes, _toggleGyroscopes);
+            _ini.Set(IniSection, IniMaintainPower, _maintainPower);
             Me.CustomData = _ini.ToString();
             
             GridTerminalSystem.GetBlocksOfType(_cockpits, cockpit => cockpit.CubeGrid == Me.CubeGrid);
@@ -134,17 +138,30 @@ namespace DockingManager
             {
                 if (_rechargeBatteries)
                 {
-                    _batteries.ForEach(battery =>
+                    if (_batteries.Count == 1 && _maintainPower)
                     {
-                        if (battery.CurrentStoredPower < 0.99)
+                        _batteries.ForEach(battery =>
                         {
-                            battery.ChargeMode = ChargeMode.Recharge;
-                        }
-                        else if (battery.CurrentStoredPower >= 1)
-                        {
-                            battery.ChargeMode = ChargeMode.Auto;
-                        }
-                    });
+                            if (battery.CurrentStoredPower < 0.99)
+                            {
+                                battery.ChargeMode = ChargeMode.Recharge;
+                            }
+                            else if (battery.CurrentStoredPower >= 1)
+                            {
+                                battery.ChargeMode = ChargeMode.Auto;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        var backupBattery = _maintainPower
+                            ? _batteries.MaxBy(battery => battery.CurrentStoredPower)
+                            : null;
+
+                        _batteries.ForEach(battery => battery.ChargeMode = battery == backupBattery
+                            ? ChargeMode.Auto
+                            : ChargeMode.Recharge);
+                    }
                 }
                 
                 if (_toggleGenerators)
