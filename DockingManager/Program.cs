@@ -305,7 +305,7 @@ namespace DockingManager
                     else
                     {
                         var backupBattery = ini.MaintainPower
-                            ? _batteries.MaxBy(battery => battery.CurrentStoredPower)
+                            ? _batteries.MaxBy(battery => battery.CurrentStoredPower / battery.MaxStoredPower)
                             : null;
 
                         _batteries.ForEach(battery => battery.ChargeMode = battery == backupBattery
