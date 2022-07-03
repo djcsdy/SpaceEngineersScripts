@@ -262,8 +262,10 @@ namespace DockingManager
                     if (_hydrogenTanks.Select(tank => tank.FilledRatio).Average() * 100f >
                         ini.RefillHydrogenOfConnectedShipsIfOverPercent)
                     {
+                        var directlyConnectedGrids = _connectors.Select(connector => connector.OtherConnector.CubeGrid);
                         GridTerminalSystem.GetBlocksOfType(_connectedDockingControllers,
-                            block => block.CubeGrid != Me.CubeGrid && Ini.FromBlock(this, block) != null);
+                            block => directlyConnectedGrids.Any(grid => block.CubeGrid == grid) &&
+                                     Ini.FromBlock(this, block) != null);
                         refillConnectedHydrogen = _connectedDockingControllers.Any(controller =>
                         {
                             if (Ini.FromBlock(this, controller).RefillHydrogenOfConnectedShipsIfOverPercent >
