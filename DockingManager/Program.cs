@@ -49,8 +49,6 @@ namespace DockingManager
 
             private static readonly Ini Default = new Ini(true, true, true, true, true, true, true, 100f, 100f);
 
-            private readonly MyGridProgram program;
-
             public static Ini FromBlock(MyGridProgram program, IMyProgrammableBlock block)
             {
                 return FromBlockInternal(program, block, false);
