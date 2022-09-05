@@ -22,19 +22,21 @@ namespace MinimumSupply
 {
     public class Program : MyGridProgram
     {
-        private static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> pairs)
+        private static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            IEnumerable<KeyValuePair<TKey, TValue>> pairs)
         {
             var dictionary = new Dictionary<TKey, TValue>();
             foreach (var pair in pairs)
             {
                 dictionary.Add(pair.Key, pair.Value);
             }
+
             return dictionary;
         }
-        
+
         private static readonly IDictionary<MyItemType, ItemDefinition> ItemDefinitionsByItemType =
             ToDictionary(
-                new []
+                new[]
                 {
                     new ItemDefinition("Bulletproof Glass", MyItemType.MakeComponent("BulletproofGlass")),
                     new ItemDefinition("Computers", MyItemType.MakeComponent("Computer")),
@@ -112,7 +114,7 @@ namespace MinimumSupply
                     .Select(definition => new KeyValuePair<string, ItemDefinition>(definition.IniName, definition))
             );
 
-        private static IDictionary<MyItemType, int> EmptyInventory = ToDictionary(
+        private static readonly IDictionary<MyItemType, int> EmptyInventory = ToDictionary(
             ItemDefinitionsByItemType.Keys
                 .Select(key => new KeyValuePair<MyItemType, int>(key, 0))
         );
@@ -237,7 +239,7 @@ namespace MinimumSupply
                     if (Parser.ContainsSection(IniSection))
                     {
                         ini = new Ini(ToDictionary(
-                            Default.targetQuantities.Select(pair => new KeyValuePair<MyItemType, int>(
+                            Default._targetQuantities.Select(pair => new KeyValuePair<MyItemType, int>(
                                 pair.Key,
                                 Parser.Get(IniSection, ItemDefinitionsByItemType[pair.Key].IniName).ToInt32(pair.Value)
                             ))
@@ -261,7 +263,7 @@ namespace MinimumSupply
                     ini = Default;
                 }
 
-                foreach (var pair in ini.targetQuantities)
+                foreach (var pair in ini._targetQuantities)
                 {
                     Parser.Set(IniSection, ItemDefinitionsByItemType[pair.Key].IniName, pair.Value);
                 }
@@ -271,87 +273,12 @@ namespace MinimumSupply
                 return ini;
             }
 
-            private readonly IDictionary<MyItemType, int> targetQuantities;
+            private readonly IDictionary<MyItemType, int> _targetQuantities;
 
             public Ini(IDictionary<MyItemType, int> targetQuantities)
             {
-                this.targetQuantities = targetQuantities;
+                this._targetQuantities = targetQuantities;
             }
-        }
-
-        private static class ItemTypes
-        {
-            public static readonly MyItemType BulletproofGlass = MyItemType.MakeComponent("BulletproofGlass");
-            public static readonly MyItemType Computer = MyItemType.MakeComponent("Computer");
-            public static readonly MyItemType ConstructionComponent = MyItemType.MakeComponent("Construction");
-            public static readonly MyItemType DetectorComponent = MyItemType.MakeComponent("Detector");
-            public static readonly MyItemType Display = MyItemType.MakeComponent("Display");
-            public static readonly MyItemType Explosives = MyItemType.MakeComponent("Explosives");
-            public static readonly MyItemType Girder = MyItemType.MakeComponent("Girder");
-            public static readonly MyItemType GravityComponent = MyItemType.MakeComponent("GravityGenerator");
-            public static readonly MyItemType InteriorPlate = MyItemType.MakeComponent("InteriorPlate");
-            public static readonly MyItemType LargeSteelTube = MyItemType.MakeComponent("LargeTube");
-            public static readonly MyItemType MedicalComponent = MyItemType.MakeComponent("Medical");
-            public static readonly MyItemType MetalGrid = MyItemType.MakeComponent("MetalGrid");
-            public static readonly MyItemType Motor = MyItemType.MakeComponent("Motor");
-            public static readonly MyItemType PowerCell = MyItemType.MakeComponent("PowerCell");
-
-            public static readonly MyItemType RadioCommunicationComponent =
-                MyItemType.MakeComponent("RadioCommunication");
-
-            public static readonly MyItemType ReactorComponent = MyItemType.MakeComponent("Reactor");
-            public static readonly MyItemType SmallSteelTube = MyItemType.MakeComponent("SmallTube");
-            public static readonly MyItemType SolarCell = MyItemType.MakeComponent("SolarCell");
-            public static readonly MyItemType SteelPlate = MyItemType.MakeComponent("SteelPlate");
-            public static readonly MyItemType Superconductor = MyItemType.MakeComponent("Superconductor");
-            public static readonly MyItemType ThrusterComponent = MyItemType.MakeComponent("Thrust");
-            public static readonly MyItemType Pro1 = MyItemType.MakeTool("AdvancedHandHeldLauncherItem");
-            public static readonly MyItemType Grinder = MyItemType.MakeTool("AngleGrinderItem");
-            public static readonly MyItemType EnhancedGrinder = MyItemType.MakeTool("AnglerGrinder2Item");
-            public static readonly MyItemType ProficientGrinder = MyItemType.MakeTool("AngleGrinder3Item");
-            public static readonly MyItemType EliteGrinder = MyItemType.MakeTool("AngleGrinder4Item");
-            public static readonly MyItemType Mr20 = MyItemType.MakeTool("AutomaticRifleItem");
-            public static readonly MyItemType Ro1 = MyItemType.MakeTool("BasicHandHeldLauncherItem");
-            public static readonly MyItemType Datapad = new MyItemType("MyObjectBuilder_Datapad", "Datapad");
-            public static readonly MyItemType S10e = MyItemType.MakeTool("ElitePistolItem");
-            public static readonly MyItemType S20a = MyItemType.MakeTool("FullAutoPistolItem");
-            public static readonly MyItemType HandDrill = MyItemType.MakeTool("HandDrillItem");
-            public static readonly MyItemType EnhancedHandDrill = MyItemType.MakeTool("HandDrill2Item");
-            public static readonly MyItemType ProficientHandDrill = MyItemType.MakeTool("HandDrill3Item");
-            public static readonly MyItemType EliteHandDrill = MyItemType.MakeTool("HandDrill4Item");
-
-            public static readonly MyItemType HydrogenBottle =
-                new MyItemType("MyObjectBuilder_GasContainerObject", "HydrogenBottle");
-
-            public static readonly MyItemType OxygenBottle =
-                new MyItemType("MyObjectBuilder_GasContainerObject", "OxygenBottle");
-
-            public static readonly MyItemType Mr8p = MyItemType.MakeTool("PreciseAutomaticRifleItem");
-            public static readonly MyItemType Mr50a = MyItemType.MakeTool("RapidFireAutomaticRifleItem");
-            public static readonly MyItemType S10 = MyItemType.MakeTool("SemiAutoPistolItem");
-            public static readonly MyItemType Mr30e = MyItemType.MakeTool("UltimateAutomaticRifleItem");
-            public static readonly MyItemType Welder = MyItemType.MakeTool("WelderItem");
-            public static readonly MyItemType EnhancedWelder = MyItemType.MakeTool("Welder2Item");
-            public static readonly MyItemType ProficientWelder = MyItemType.MakeTool("Welder3Item");
-            public static readonly MyItemType EliteWelder = MyItemType.MakeTool("Welder4Item");
-            public static readonly MyItemType AutocannonMagazine = MyItemType.MakeAmmo("AutocannonClip");
-            public static readonly MyItemType Mr20Magazine = MyItemType.MakeAmmo("AutomaticRifleGun_Mag_20rd");
-            public static readonly MyItemType Canvas = MyItemType.MakeComponent("Canvas");
-            public static readonly MyItemType S10eMagazine = MyItemType.MakeAmmo("ElitePistolMagazine");
-            public static readonly MyItemType S20aMagazine = MyItemType.MakeAmmo("FullAutoPistolMagazine");
-            public static readonly MyItemType ArtilleryShell = MyItemType.MakeAmmo("LargeCalibreAmmo");
-            public static readonly MyItemType LargeRailgunSabot = MyItemType.MakeAmmo("LargeRailgunAmmo");
-            public static readonly MyItemType AssaultCannonShell = MyItemType.MakeAmmo("MediumCalibreAmmo");
-            public static readonly MyItemType Missile = MyItemType.MakeAmmo("Missile200mm");
-            public static readonly MyItemType GatlingAmmoBox = MyItemType.MakeAmmo("NATO_25x184mm");
-            public static readonly MyItemType Mr8pMagazine = MyItemType.MakeAmmo("PreciseAutomaticRifleGun_Mag_5rd");
-
-            public static readonly MyItemType
-                Mr50aMagazine = MyItemType.MakeAmmo("RapidFireAutomaticRifleGun_Mag_50rd");
-
-            public static readonly MyItemType S10Magazine = MyItemType.MakeAmmo("SemiAutoPistolMagazine");
-            public static readonly MyItemType SmallRailgunSabot = MyItemType.MakeAmmo("SmallRailgunAmmo");
-            public static readonly MyItemType Mr30eMagazine = MyItemType.MakeAmmo("UltimateAutomaticRifleGun_Mag_30rd");
         }
 
         private readonly List<IMyAssembler> _assemblers = new List<IMyAssembler>();
