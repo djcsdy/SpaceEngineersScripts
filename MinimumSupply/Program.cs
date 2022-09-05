@@ -40,7 +40,7 @@ namespace MinimumSupply
                 {
                     new ItemDefinition("Bulletproof Glass", MyItemType.MakeComponent("BulletproofGlass")),
                     new ItemDefinition("Computers", MyItemType.MakeComponent("Computer")),
-                    new ItemDefinition("Construction Components", MyItemType.MakeComponent("ConstructionComponent")),
+                    new ItemDefinition("Construction Components", MyItemType.MakeComponent("Construction")),
                     new ItemDefinition("Detector Components", MyItemType.MakeComponent("Detector")),
                     new ItemDefinition("Displays", MyItemType.MakeComponent("Display")),
                     new ItemDefinition("Explosives", MyItemType.MakeComponent("Explosives")),
