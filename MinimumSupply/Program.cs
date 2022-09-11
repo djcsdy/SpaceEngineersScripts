@@ -392,6 +392,11 @@ namespace MinimumSupply
             Echo($"Needed Quantity: {neededQuantity}");
             Echo($"Quantity To Produce: {quantityToProduce}");
 
+            if (quantityToProduce < 1d)
+            {
+                return;
+            }
+
             var firstAssembler = _assemblers.First();
             if (firstAssembler.IsQueueEmpty)
             {
